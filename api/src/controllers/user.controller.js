@@ -4,6 +4,7 @@ const { compare, encrypt } = require("../helpers/handleBcrypt");
 
 
 const createUser = async (req, res) => {
+  console.log(req.body)
   try {
     const { name, email, password, role } = req.body;
     console.log(role)
@@ -58,6 +59,7 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
+    console.log("estoy aqui")
     const { userId } = req.params;
     console.log(userId);
     const user = await User.findByPk(userId);
