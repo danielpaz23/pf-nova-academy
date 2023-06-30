@@ -6,6 +6,21 @@ const postCreateCourseForSale = async (req, res) => {
   try {
     const { name, category, duration, description, images, price } = req.body;
     const user = await getUserToken(req);
+    if(!name){
+      return res.status(404).json({ error: "Name missing" });
+    }
+    if(!category){
+      return res.status(404).json({ error: "Category missing" });
+    }
+    if(!duration){
+      return res.status(404).json({ error: "Duration missing" });
+    }
+    if(!images){
+      return res.status(404).json({ error: "Images missing" });
+    }
+    if(!price){
+      return res.status(404).json({ error: "Price missing" });
+    }
     const newCourse = await CourseForSale.create({
       name,
       category,
@@ -19,31 +34,10 @@ const postCreateCourseForSale = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-  /* try {
-    
-    token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3OTk0MjI2LCJleHAiOjE2ODgwMDE0MjZ9.6Dg-N6sUFOZ3Ek8L8xL8MosNVc5AtNkVgTUItYj2hVU
-
-    const user = await getUserToken(req);
-    const dataCourse = cursos.map((course) => {
-      return {
-        name: course.name,
-        category: course.category,
-        duration: course.duration,
-        price: course.price,
-        idProfile: user.idUser,
-      };
-    });
-    const newCourse = await CourseForSale.bulkCreate(dataCourse);
-    res.json(newCourse);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  } */
 };
 
 const getCourseForSale = async (req, res) => {
   try {
-    /*   const user = await getUserToken(req); */
-
     const courseAll = await CourseForSale.findAll({
       include: {
         model: Profile,
@@ -56,6 +50,7 @@ const getCourseForSale = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 const updateCourseForSale = async (req, res) => {
   try {
     const courseId = req.params.courseId;
@@ -78,6 +73,7 @@ const updateCourseForSale = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
 const deleteCourseForSale = async (req, res) => {
   try {
     const courseId = req.params.courseId;

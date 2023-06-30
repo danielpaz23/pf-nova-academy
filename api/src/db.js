@@ -74,6 +74,15 @@ CourseBought.belongsTo(Profile, {
 //relacion de cursos en venta a category de muchos a muchos
 CourseForSale.belongsToMany(Category, { through: "courseCategory" });
 Category.belongsToMany(CourseForSale, { through: "CourseCategory" });
+// relacion de cursos en venta a module, de uno a muchos
+CourseForSale.hasMany(Module, {
+  foreignKey: "idCourseForSale",
+});
+// relacion de module a lesson, de uno a muhcos
+Module.hasMany(Lesson, {
+  foreignKey: "idModule",
+});
+
 
 /* Profile.belongsToMany(Course, {
   through: "profile_Course",
